@@ -1,16 +1,9 @@
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
-use surrealdb::sql::Thing;
+use todo_api_derive::ApiModel;
 
-#[derive(Debug, Serialize, Deserialize, JsonSchema)]
+#[derive(Debug, Serialize, Deserialize, JsonSchema, ApiModel)]
 pub struct Task {
-    pub title: String,
-    pub completed: bool,
-}
-
-#[derive(Debug, Serialize, Deserialize)]
-pub struct TaskResult {
-    pub id: Thing,
     pub title: String,
     pub completed: bool,
 }

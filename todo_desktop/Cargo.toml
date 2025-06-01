@@ -4,3 +4,12 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+gdk = "0.16.1"
+gio = "0.16.1"
+glib = "0.16.1"
+gtk = "0.16.1"
+openssl = { version = "0.10", features = ["vendored"] }
+relm = "0.24.1"
+relm-derive = "0.24.0"
+reqwest = { version = "0.12.18", features = ["json"] }
+tokio = { version = "1.45.1", features = ["full"] }
