@@ -1,19 +1,18 @@
 use error_screen::ErrorScreen;
 use main_screen::MainScreen;
-use relm::Component;
+use relm::Relm;
+
+use crate::{app::TodoApp, screen_registry};
 
 pub mod main_screen;
 pub mod error_screen;
-pub struct Screens {
-    pub main: Component<MainScreen>,
-    pub error: Component<ErrorScreen>,
-}
 
-impl Default for Screens {
-    fn default() -> Self {
-        Screens {
-            main: relm::init(()).unwrap(),
-            error: relm::init(()).unwrap(),
-        }
-    }
+screen_registry! {
+    screens: [
+        Main => MainScreen,
+        Error => ErrorScreen(relm),
+    ],
+    args: [
+        relm: Relm<TodoApp>,
+    ],
 }

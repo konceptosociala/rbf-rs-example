@@ -10,7 +10,7 @@ use rocket_okapi::openapi;
 pub async fn tasks(db: &State<Database>) -> Result<Value> {
     let tasks: Vec<TaskResult> = db.select("tasks").await?;
     
-    Ok(json!({"result":tasks}))
+    Ok(json!({"tasks":tasks}))
 }
 
 #[openapi(tag = "Tasks")]

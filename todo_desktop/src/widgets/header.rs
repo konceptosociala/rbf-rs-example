@@ -1,31 +1,30 @@
 #![allow(dead_code)]
 
 use gtk::prelude::*;
-use gtk::*;
 use relm::{StreamHandle, Widget};
 use relm_derive::{widget, Msg};
-use crate::{event::TodoAppMsg, utils::traits::*};
+use crate::utils::traits::*;
+use crate::app;
 
-pub struct HeaderModel {
+pub struct Model {
     pub label: &'static str,
-    pub win_stream: StreamHandle<TodoAppMsg>
+    pub win_stream: StreamHandle<app::Msg>
 }
 
 #[derive(Msg)]
-pub enum HeaderMsg {
-    SetIndex(usize)
+pub enum Msg {
+    
 }
 
 #[widget]
 impl Widget for Header {
-    fn model(param: HeaderModel) -> HeaderModel {
+    fn model(param: Model) -> Model {
         param
     }
 
-    fn update(&mut self, event: HeaderMsg) {
+    fn update(&mut self, event: Msg) {
         match event {
-            HeaderMsg::SetIndex(index) => 
-                self.model.win_stream.emit(TodoAppMsg::SetCurrentScreen(index)),
+            
         }
     }
 
@@ -35,17 +34,27 @@ impl Widget for Header {
             show_close_button: true,
             start_child: view! {
                 gtk::Button {
-                    image: Some(&Image::from_icon_name(Some("list-add-symbolic"), gtk::IconSize::Button)),
+                    image: view! {
+                        gtk::Image {
+                            icon_name: Some("list-add-symbolic"),
+                            icon_size: gtk::IconSize::Button,
+                        }
+                    },
                 
-                    clicked => HeaderMsg::SetIndex(0),
+                    // clicked => HeaderMsg::SetIndex(0),
                 },
             },
             
             end_child: view! {
                 gtk::Button {
-                    image: Some(&Image::from_icon_name(Some("open-menu-symbolic"), gtk::IconSize::Button)),
+                    image: view! {
+                        gtk::Image {
+                            icon_name: Some("open-menu-symbolic"),
+                            icon_size: gtk::IconSize::Button,
+                        }
+                    },
                 
-                    clicked => HeaderMsg::SetIndex(1),
+                    // clicked => HeaderMsg::SetIndex(1),
                 },
             },
         }

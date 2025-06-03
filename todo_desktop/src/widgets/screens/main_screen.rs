@@ -2,7 +2,6 @@ use relm_derive::widget;
 use relm::Widget;
 use gtk::prelude::*;
 
-
 #[widget]
 impl Widget for MainScreen {
     fn model() {}

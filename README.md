@@ -24,11 +24,11 @@ It is a _simple_ cross-platform ToDo-application example, using rbf/rs stack:
 
 
 
-## Build for desktop
+## Run on desktop
 
 ```bash
 $ cd todo_desktop
-$ cargo build --release
+$ cargo run --release -- http://127.0.0.1:8000/api
 ```
 
 ## Build for mobile
