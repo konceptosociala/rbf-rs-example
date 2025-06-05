@@ -32,7 +32,8 @@ async fn rocket() -> _ {
             openapi_get_routes![
                 tasks,
                 tasks_create,
-                tasks_delete,           
+                tasks_delete,  
+                tasks_update,         
             ],
         )
         .mount(

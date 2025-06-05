@@ -26,7 +26,7 @@ impl Widget for ErrorScreen {
 
     fn update(&mut self, event: Msg) {
         match event {
-            RetryFetch => self.model.app_stream.emit(app::Msg::FetchData),
+            RetryFetch => self.model.app_stream.emit(app::Msg::GetTasks),
         }
     }
 

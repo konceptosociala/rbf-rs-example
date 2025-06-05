@@ -86,7 +86,7 @@ macro_rules! relm_thread {
     {
         relm: $relm:expr,
         name: $name:expr,
-        msg: $msg:ident,
+        $(msg: $msg:ident,)?
         result: $result:block $(,)?
     } => {
         {
@@ -103,7 +103,7 @@ macro_rules! relm_thread {
 
             let stream = $relm.stream().clone();
             receiver.attach(None, move |data| {
-                stream.emit($msg(data));
+                $(stream.emit($msg(data));)?
 
                 glib::Continue(false)
             });

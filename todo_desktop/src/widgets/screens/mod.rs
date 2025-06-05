@@ -9,7 +9,7 @@ pub mod error_screen;
 
 screen_registry! {
     screens: [
-        Main => MainScreen,
+        Main => MainScreen(relm.clone()),
         Error => ErrorScreen(relm),
     ],
     args: [

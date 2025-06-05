@@ -28,7 +28,7 @@ It is a _simple_ cross-platform ToDo-application example, using rbf/rs stack:
 
 ```bash
 $ cd todo_desktop
-$ cargo run --release -- http://127.0.0.1:8000/api
+$ cargo run -- -A 127.0.0.1:8000/api -M http
 ```
 
 ## Build for mobile

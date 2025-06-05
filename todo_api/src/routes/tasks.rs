@@ -18,7 +18,7 @@ pub async fn tasks(db: &State<Database>) -> Result<Value> {
 pub async fn tasks_create(db: &State<Database>, task: Json<Task>) -> Result<Value> {
     let created = db.insert("tasks", task.into_inner()).await?;
     
-    Ok(json!({"created": created}))
+    Ok(json!(created))
 }
 
 #[openapi(tag = "Tasks")]
@@ -31,5 +31,18 @@ pub async fn tasks_delete(db: &State<Database>, id: &str) -> Value {
             json!({"deleted": true})
         }
         _ => json!({"deleted": false}),
+    }
+}
+
+#[openapi(tag = "Tasks")]
+#[post("/tasks/update/<id>", format = "json", data = "<task>")]
+pub async fn tasks_update(db: &State<Database>, id: &str, task: Json<Task>) -> Value {
+    let updated = db.update("tasks", id, task.into_inner()).await;
+
+    match updated {
+        Ok(Some(_)) => {
+            json!({"updated": true})
+        }
+        _ => json!({"updated": false}),
     }
 }

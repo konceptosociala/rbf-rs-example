@@ -8,13 +8,15 @@ use crate::app;
 
 pub struct Model {
     pub label: &'static str,
-    pub win_stream: StreamHandle<app::Msg>
+    pub app_stream: StreamHandle<app::Msg>
 }
 
 #[derive(Msg)]
 pub enum Msg {
-    
+    OpenAddTaskDialog,
 }
+
+use Msg::*;
 
 #[widget]
 impl Widget for Header {
@@ -24,7 +26,7 @@ impl Widget for Header {
 
     fn update(&mut self, event: Msg) {
         match event {
-            
+            OpenAddTaskDialog => self.model.app_stream.emit(app::Msg::OpenAddTaskDialog),
         }
     }
 
@@ -41,7 +43,7 @@ impl Widget for Header {
                         }
                     },
                 
-                    // clicked => HeaderMsg::SetIndex(0),
+                    clicked => OpenAddTaskDialog,
                 },
             },
             

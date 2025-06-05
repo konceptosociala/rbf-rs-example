@@ -68,6 +68,19 @@ impl Database {
         Ok(result)
     }
 
+    pub async fn update<T: Serialize + 'static>(
+        &self, 
+        table: &str, 
+        id: &str, 
+        record: T,
+    ) -> Result<Option<Record>> {
+        let result: Option<Record> = self.db
+            .update((table, id))
+            .content(record)
+            .await?;
+        Ok(result)
+    }
+
     pub async fn delete(&self, table: &str, id: &str) -> Result<Option<Record>> {
         let result: Option<Record> = self.db.delete((table, id)).await?;
         Ok(result)
