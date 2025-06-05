@@ -9,6 +9,7 @@ use crate::{
     app, 
     model::task::Task, 
     widgets::expand::*,
+    utils::traits::*,
 };
 
 pub struct Model {
@@ -44,6 +45,8 @@ impl Widget for TaskPanel {
 
     view! {
         gtk::Frame {
+            classes: &["task-panel"],
+            
             gtk::Box {
                 orientation: Orientation::Horizontal,
                 spacing: 10,
@@ -62,6 +65,7 @@ impl Widget for TaskPanel {
                 Expand(ExpandType::Horizontal),
 
                 gtk::Button {
+                    classes: &["delete-button"],
                     image: Some(&Image::from_icon_name(
                         Some("user-trash-symbolic"), 
                         gtk::IconSize::Button,

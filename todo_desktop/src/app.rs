@@ -24,12 +24,6 @@ use crate::widgets::header::Header;
 use crate::widgets::screens::ScreenId;
 use crate::widgets::screens::Screens;
 
-#[cfg(target_os = "macos")]
-pub const UI_THEME: &[u8] = include_bytes!("../themes/macos/gtk.gresource");
-
-#[cfg(target_os = "windows")]
-pub const UI_THEME: &[u8] = include_bytes!("../themes/windows/gtk.gresource");
-
 pub struct Model {
     pub relm: Relm<TodoApp>,
     pub runtime: Arc<Runtime>,
@@ -264,7 +258,7 @@ impl Widget for TodoApp {
         gtk::Dialog {
             title: "Add Task",
             modal: true,
-            type_hint: gdk::WindowTypeHint::Dialog,
+            type_hint: gdk::WindowTypeHint::Splashscreen,
             content: view! {
                 gtk::Box {
                     orientation: Orientation::Vertical,
@@ -280,22 +274,17 @@ impl Widget for TodoApp {
                         placeholder_text: Some("Enter new task name")
                     },
 
-                    gtk::Box {
-                        orientation: Orientation::Horizontal,
-                        spacing: 10,
-                        
-                        gtk::Button {
-                            label: "OK",
+                    gtk::Button {
+                        label: "OK",
 
-                            clicked => AddTask,
-                        },
+                        clicked => AddTask,
+                    },
 
-                        gtk::Button {
-                            label: "Cancel",
+                    gtk::Button {
+                        label: "Cancel",
 
-                            clicked => CancelAddTask,
-                        },
-                    }
+                        clicked => CancelAddTask,
+                    },
                 }
             },
 
@@ -332,18 +321,33 @@ impl TodoApp {
 
     #[cfg(any(target_os = "macos", target_os = "windows"))]
     pub fn apply_theme() {
-        use gtk::prelude::CssProviderExt as _;
+        use crate::*;
         use gtk::traits::SettingsExt;
 
         if let Some(settings) = gtk::Settings::default() {
             settings.set_gtk_application_prefer_dark_theme(true);
         }
 
-        gio::resources_register(&gio::Resource::from_data(&glib::Bytes::from_static(UI_THEME)).unwrap());
+        #[cfg(target_os = "macos")]
+        include_gresource!("../themes/macos/gtk.gresource");
 
-        let provider = gtk::CssProvider::new();
-        provider.load_from_resource("/org/gnome/theme/gtk.css");
+        #[cfg(target_os = "windows")]
+        include_gresource!("../themes/windows/gtk.gresource");
 
-        gtk::StyleContext::add_provider_for_screen(&gdk::Screen::default().unwrap(), &provider, gtk::STYLE_PROVIDER_PRIORITY_APPLICATION);
+        apply_css!(resource: "/org/gnome/theme/gtk.css");
+
+        #[cfg(target_os = "macos")]
+        apply_css!(data: b"
+            .task-panel {
+                padding: 3px;
+                border-radius: 5px;
+                background-color: shade(@theme_bg_color, 0.8);
+            }
+
+            .delete-button {
+                border-radius: 50%;
+                padding: 5px;
+            }
+        ");
     }
 }

@@ -132,3 +132,41 @@ macro_rules! result_error {
         }
     };
 }
+
+#[macro_export]
+macro_rules! include_gresource {
+    ($res:expr) => {
+        gio::resources_register(
+            &gio::Resource::from_data(
+                &glib::Bytes::from_static(include_bytes!($res))
+            ).unwrap()
+        );
+    };
+}
+
+#[macro_export]
+macro_rules! apply_css {
+    (resource: $res:expr) => {
+        {
+            use gtk::prelude::CssProviderExt as _;
+
+            let provider = gtk::CssProvider::new();
+            provider.load_from_resource($res);
+
+            gtk::StyleContext::add_provider_for_screen(&gdk::Screen::default().unwrap(), &provider, gtk::STYLE_PROVIDER_PRIORITY_USER);
+        }
+    };
+
+    (data: $data:expr) => {
+        {
+            use gtk::prelude::CssProviderExt as _;
+
+            let provider = gtk::CssProvider::new();
+            provider.load_from_data($data).unwrap_or_else(
+                $crate::result_error!("Failed to load CSS data")
+            );
+
+            gtk::StyleContext::add_provider_for_screen(&gdk::Screen::default().unwrap(), &provider, gtk::STYLE_PROVIDER_PRIORITY_USER);
+        }
+    };
+}
