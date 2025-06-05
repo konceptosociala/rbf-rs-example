@@ -9,7 +9,9 @@ It is a _simple_ cross-platform ToDo-application example, using rbf/rs stack:
 * **Flutter (Dart)** for mobile
 * **Rocket + SurrealDB (Rust)** for backend
 
-## Run backend
+## Installation instructions
+
+### Run backend
 
 * Run SurrealDB database
     ```bash
@@ -24,23 +26,32 @@ It is a _simple_ cross-platform ToDo-application example, using rbf/rs stack:
 
 
 
-## Run on desktop
+### Run on desktop
 
 ```bash
 $ cd todo_desktop
 $ cargo run -- -A 127.0.0.1:8000/api -M http
 ```
 
-## Build for mobile
+### Run on Android
 
 ```bash
-$ cd todo_mobile
-$ flutter build apk
+WIP
 ```
 
-## Build for web
+### Run on web
 
 ```bash
-$ cd todo_web
-$ dotnet build TodoWeb.csproj --configuration Release
+WIP
 ```
+
+## Screenshots
+
+### Ubuntu
+<img src="screenshots/ubuntu.png" alt="ubuntu" width=400/>
+
+### Windows
+<img src="screenshots/windows.png" alt="windows" width=400/>
+
+### macOS
+<img src="screenshots/macos.png" alt="macos" width=400/>
